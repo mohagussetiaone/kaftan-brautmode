@@ -9,10 +9,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Kaftan",
-  description: "Kaftan - Online Wedding Invitation",
+  description: "Modern wedding dress crafted with elegance and timeless style",
   openGraph: {
     title: "Kaftan",
-    description: "Undangan online elegan dan modern.",
+    description: "Modern wedding dress crafted with elegance and timeless style",
     url: "https://selarasinvite.com",
     siteName: "Kaftan",
     images: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
         url: "./favicon.ico",
         width: 1200,
         height: 630,
-        alt: "Kaftan",
+        alt: "Kaftan Wedding Dress",
       },
     ],
     type: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Kaftan",
-    description: "Undangan online elegan dan modern.",
+    description: "Modern wedding dress crafted with elegance and timeless style",
     images: ["./favicon.ico"],
   },
 };
