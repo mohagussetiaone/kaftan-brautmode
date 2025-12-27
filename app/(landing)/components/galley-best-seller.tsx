@@ -1,0 +1,21 @@
+import { GalleryDummy } from "@/app/constants/gallery/gallery-dummy";
+import Gallery from "../components/gallery";
+import { Button } from "@/components/ui/button";
+
+const GalleryBestSeller = () => {
+  return (
+    <div className="w-fulltext-center my-8">
+      <div className="flex flex-col gap-8 justify-center items-center">
+        <h1 className="text-4xl font-playfair">Best Seller</h1>
+        <div className="grid grid-cols-3 gap-8">
+          {GalleryDummy.filter((_, index) => index < 3).map((item) => (
+            <Gallery {...item} key={item.id} />
+          ))}
+        </div>
+        <Button>View All Products</Button>
+      </div>
+    </div>
+  );
+};
+
+export default GalleryBestSeller;
