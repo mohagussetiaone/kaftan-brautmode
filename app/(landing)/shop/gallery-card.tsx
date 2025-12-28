@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 
 const GalleryCard = () => {
   return (
-    <div className="mx-auto max-w-6xl text-center my-8">
+    <div className="mx-auto max-w-7xl text-center my-8 px-4 md:px-0">
       <div className="flex flex-col gap-8 justify-center items-center">
-        <h1 className="text-4xl font-playfair">Shop Our Styles</h1>
+        <h1 className="text-3xl md:text-4xl font-playfair">Shop Our Styles</h1>
         <Tabs defaultValue="wedding-dress" className="flex justify-center items-center text-center">
           <TabsList className="bg-transparent flex justify-center items-center text-center mb-8">
             <TabsTrigger value="wedding-dress">Wedding dress</TabsTrigger>

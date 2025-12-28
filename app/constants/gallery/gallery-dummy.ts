@@ -64,3 +64,77 @@ export const GalleryDummy = [
     price: "€1200",
   },
 ];
+
+import GalleryTwoImg1 from "@/app/assets/images/gallery/gallery1.jpg";
+import GalleryTwoImg2 from "@/app/assets/images/gallery/gallery2.jpg";
+import GalleryTwoImg3 from "@/app/assets/images/gallery/gallery3.jpg";
+import GalleryTwoImg4 from "@/app/assets/images/gallery/gallery4.jpg";
+import GalleryTwoImg5 from "@/app/assets/images/gallery/gallery5.jpg";
+import GalleryTwoImg6 from "@/app/assets/images/gallery/gallery6.jpg";
+import GalleryTwoImg7 from "@/app/assets/images/gallery/gallery7.jpg";
+import GalleryTwoImg8 from "@/app/assets/images/gallery/gallery8.jpg";
+import GalleryTwoImg9 from "@/app/assets/images/gallery/gallery9.jpg";
+import GalleryTwoImg10 from "@/app/assets/images/gallery/gallery10.jpg";
+
+export const galleryTwoDummy = [
+  {
+    id: 1,
+    src: GalleryTwoImg1,
+    alt: "Woman with cookie",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 2,
+    src: GalleryTwoImg2,
+    alt: "Blue robot",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 3,
+    src: GalleryTwoImg3,
+    alt: "Food containers",
+    span: "col-span-2 row-span-1",
+  },
+  {
+    id: 4,
+    src: GalleryTwoImg4,
+    alt: "Person eating",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 5,
+    src: GalleryTwoImg5,
+    alt: "Food on plate",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 6,
+    src: GalleryTwoImg6,
+    alt: "Photos in envelope",
+    span: "col-span-2 row-span-1",
+  },
+  {
+    id: 7,
+    src: GalleryTwoImg7,
+    alt: "Woman in beige shirt",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 8,
+    src: GalleryTwoImg8,
+    alt: "Woman with cookie",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 9,
+    src: GalleryTwoImg9,
+    alt: "Woman with cookie",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 10,
+    src: GalleryTwoImg10,
+    alt: "Woman with cookie",
+    span: "col-span-1 row-span-2",
+  },
+];

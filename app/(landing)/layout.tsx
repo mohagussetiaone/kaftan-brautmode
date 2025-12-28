@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <main className="bg-background">
+    <main className="bg-background overflow-hidden">
       <Navbar />
       {children}
       <Footer />

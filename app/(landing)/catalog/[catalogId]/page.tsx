@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import Banner from "../../components/banner";
-import bgImage from "@/app/assets/images/banner/main-banner.jpg";
 import ModelImg1 from "@/app/assets/images/gallery/model1.png";
 import ModelImg2 from "@/app/assets/images/gallery/model2.png";
 import ModelImg3 from "@/app/assets/images/gallery/model3.png";
@@ -46,17 +45,7 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div
-        style={{
-          backgroundImage: `url(${bgImage.src})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-          paddingTop: "70px",
-        }}
-      >
-        <Banner />
-      </div>
+      <Banner />
       <div className="mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
         {/* Product Detail Section */}
         <div className="grid gap-8 lg:grid-cols-2">

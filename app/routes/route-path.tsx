@@ -20,9 +20,9 @@ const Routes: React.FC<RoutesProps> = ({ onNavigate }) => {
             <Link
               href={route.to}
               onClick={() => onNavigate(route.to)}
-              className={clsx("block p-2 text-center text-white rounded md:border-none border hover:text-gray-300 md:p-0", {
+              className={clsx("block p-2 text-center text-primary rounded md:border-none border md:p-0", {
                 "border-primary underline-offset-4 font-semibold text-primary decoration-brand-600": isActive,
-                "font-normal": !isActive,
+                "font-normal border-primary": !isActive,
               })}
             >
               {route.name}

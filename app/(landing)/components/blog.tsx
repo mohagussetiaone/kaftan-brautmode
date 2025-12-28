@@ -9,9 +9,9 @@ const Blogs = ({ id, imageUrl, name, date, description }: { id: number; imageUrl
         <Image src={imageUrl} alt={`Blog_Image_${id}`} fill />
       </div>
       <Link href={`/catalog/${id}`} className="flex flex-col gap-2 justify-start">
-        <h2 className="text-2xl font-medium">{name}</h2>
-        <p className="text-sm">{date}</p>
-        <p className="line-clamp-2">{description}</p>
+        <h2 className="text-lg md:text-2xl font-medium">{name}</h2>
+        <p className="text-xs md:text-sm">{date}</p>
+        <p className="line-clamp-2 text-sm">{description}</p>
         <Button className="w-fit px-0" variant="link">
           Read more
         </Button>

@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-2xl">
-      <div className="flex mx-auto justify-between p-2 md:px-4">
+      <div className="flex mx-auto max-w-7xl  justify-between p-2 md:px-4">
         <div className="flex-1" />
         <div className="hidden md:flex items-center gap-6 justify-center">
           <Link href="/" className="flex">
@@ -110,7 +110,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       href="/admin"
-                      className={clsx("block p-2 font-semibold text-center rounded md:border-none border border-gray-600 hover:text-primary md:p-0", {
+                      className={clsx("block p-2 text-center rounded border border-primary underline-offset-4 text-primary decoration-brand-600 md:p-0", {
                         "border-primary underline-offset-4  text-primary decoration-brand-600": pathname === "/dashboard",
                         "text-gray-900": pathname !== "/admin",
                       })}
@@ -125,8 +125,8 @@ const Navbar = () => {
                   <li>
                     <Link
                       href="/dashboard"
-                      className={clsx("block p-2 font-semibold text-center rounded md:border-none border border-gray-600 hover:text-primary md:p-0", {
-                        "border-primary underline-offset-4  text-primary decoration-brand-600": pathname === "/dashboard",
+                      className={clsx("block p-2 text-center rounded border border-primary underline-offset-4 text-primary decoration-brand-600 md:p-0", {
+                        "border border-primary underline-offset-4  text-primary decoration-brand-600": pathname === "/dashboard",
                         "text-gray-900": pathname !== "/dashboard",
                       })}
                     >

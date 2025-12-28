@@ -7,7 +7,7 @@ const GalleryBestSeller = () => {
     <div className="w-fulltext-center my-8">
       <div className="flex flex-col gap-8 justify-center items-center">
         <h1 className="text-4xl font-playfair">Best Seller</h1>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {GalleryDummy.filter((_, index) => index < 3).map((item) => (
             <Gallery {...item} key={item.id} />
           ))}

@@ -8,10 +8,10 @@ import { Label } from "@/components/ui/label";
 const Footer = () => {
   return (
     <footer className="mx-auto block py-20 pb-2 bg-[#F4EFED]">
-      <div className="mx-auto px-4 max-w-6xl grid grid-cols-12">
+      <div className="mx-auto p-4 md:p-8 max-w-6xl grid grid-cols-1 md:grid-cols-12">
         <div className="flex flex-col gap-12 text-left lg:text-left col-span-7">
           <div className="w-full lg:w-6/12">
-            <div className="flex gap-40">
+            <div className="flex gap-10 md:gap-40">
               <div className="w-full whitespace-nowrap">
                 <span className="block text-blueGray-500 text-sm font-playfair mb-4">Shop</span>
                 <ul className="list-unstyled">
