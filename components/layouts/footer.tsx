@@ -68,7 +68,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-6 min-w-120 col-span-3">
+        <div className="flex flex-col gap-6 w-full md:min-w-120 col-span-3">
           <div className="flex flex-col gap-6">
             <h1 className="text-3xl font-playfair text-center">Subscribe now</h1>
             <p>Enter your email to receive your exclusive discount and get early access to new arrivals and specials offers</p>
