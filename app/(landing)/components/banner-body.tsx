@@ -8,7 +8,6 @@ const BannerBody = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "60vh",
-        paddingTop: "70px",
         maxWidth: "100%",
       }}
     >

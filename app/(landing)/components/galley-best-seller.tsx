@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const GalleryBestSeller = () => {
   return (
-    <div className="w-fulltext-center my-8">
+    <div className="w-full text-center my-8">
       <div className="flex flex-col gap-8 justify-center items-center">
         <h1 className="text-4xl font-playfair">Best Seller</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

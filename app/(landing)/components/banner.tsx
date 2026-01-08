@@ -1,14 +1,11 @@
-import bgImage from "@/app/assets/images/banner/main-banner.jpg";
-
-const Banner = () => {
+const Banner = ({ src }: { src: string }) => {
   return (
     <div
       style={{
-        backgroundImage: `url(${bgImage.src})`,
+        backgroundImage: `url(${src})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "100vh",
-        paddingTop: "70px",
       }}
     >
       <div className="grid grid-cols-2 text-center h-full items-center mx-auto max-w-6xl px-4">

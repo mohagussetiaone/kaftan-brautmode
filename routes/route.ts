@@ -1,18 +1,125 @@
 import { Activity, BookImage, Building2Icon, CalendarDays, HandCoins, HelpCircle, HomeIcon, ListOrdered, Logs, ReceiptText, Send, Users } from "lucide-react";
 
-type Route = {
+export interface SubItems {
   name: string;
   to: string;
-  perm: string[];
-  tag: string;
-};
+  description?: string;
+  icon?: React.ReactNode;
+}
 
-export const routes: Route[] = [
-  { name: "Home", to: "/", perm: ["public"], tag: "public" },
-  { name: "Shop", to: "/shop", perm: ["public"], tag: "public" },
-  { name: "About Us", to: "/about", perm: ["public"], tag: "public" },
-  { name: "Blog", to: "/#blog", perm: ["public"], tag: "public" },
-  { name: "Contact", to: "/#contact", perm: ["public"], tag: "public" },
+export interface SubRouteItem {
+  name: string;
+  items?: SubItems[];
+}
+
+export interface RouteItem {
+  name: string;
+  to: string;
+  subRoutes?: SubRouteItem[];
+  description?: string;
+}
+
+export const routes: RouteItem[] = [
+  {
+    name: "Home",
+    to: "/",
+  },
+  {
+    name: "Shop",
+    to: "/shop",
+    subRoutes: [
+      {
+        name: "Wedding dress",
+        items: [
+          {
+            name: "Modest",
+            to: "/shop?category=modest",
+            description: "Browse our complete collection",
+          },
+          {
+            name: "A Line",
+            to: "/shop?category=a-line",
+            description: "Latest products just arrived",
+          },
+          {
+            name: "Open ecked",
+            to: "/shop?category=open-ecked",
+            description: "Our most popular items",
+          },
+          {
+            name: "Luxury",
+            to: "/shop?category=luxury",
+            description: "Curated selections",
+          },
+          {
+            name: "Plus size",
+            to: "/shop?category=plus-size",
+            description: "Clothing & accessories for men",
+          },
+        ],
+      },
+      {
+        name: "Accessories",
+        items: [
+          {
+            name: "Veils",
+            to: "/shop?category=veils",
+            description: "Browse our complete collection",
+          },
+          {
+            name: "Gloves",
+            to: "/shop?category=gloves",
+            description: "Browse our complete collection",
+          },
+          {
+            name: "Baleros",
+            to: "/shop?category=baleros",
+            description: "Browse our complete collection",
+          },
+          {
+            name: "Jewelry",
+            to: "/shop?category=jewelry",
+            description: "Browse our complete collection",
+          },
+          {
+            name: "Beits",
+            to: "/shop?category=beits",
+            description: "Browse our complete collection",
+          },
+        ],
+      },
+      {
+        name: "Uncovered",
+      },
+    ],
+  },
+  {
+    name: "Categories",
+    to: "/categories",
+    subRoutes: [
+      {
+        name: "Categories",
+        items: [
+          {
+            name: "Fashion",
+            to: "/categories/fashion",
+          },
+          {
+            name: "Home",
+            to: "/categories/home",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "About",
+    to: "/about",
+  },
+  {
+    name: "Contact",
+    to: "/contact",
+  },
 ];
 
 export const sidebarRoutes = {

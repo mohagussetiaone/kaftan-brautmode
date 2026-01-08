@@ -1,6 +1,6 @@
 import { GalleryDummy } from "@/app/constants/gallery/gallery-dummy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Gallery from "../components/gallery";
+import Gallery from "./gallery";
 import { Button } from "@/components/ui/button";
 
 const GalleryCard = () => {
