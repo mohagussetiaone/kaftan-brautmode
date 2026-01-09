@@ -1,11 +1,12 @@
 "use client";
 
+import clsx from "clsx";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 
-export const MenuItem = ({ setActive, active, item, children, scrolled }: { setActive: (item: string | null) => void; active: string | null; item: string; children?: React.ReactNode; scrolled: boolean }) => {
+export const MenuItem = ({ setActive, active, item, children, scrolled, textColor }: { setActive: (item: string | null) => void; active: string | null; item: string; children?: React.ReactNode; scrolled: boolean; textColor?: string }) => {
   const [mounted, setMounted] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -75,7 +76,7 @@ export const MenuItem = ({ setActive, active, item, children, scrolled }: { setA
 
   return (
     <div ref={triggerRef} onMouseEnter={handleTriggerMouseEnter} className="relative">
-      <motion.p className="cursor-pointer text-white hover:text-gray-200 transition-colors" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <motion.p className={`cursor-pointer font-medium ${textColor || ""}`} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
         {item}
       </motion.p>
 
@@ -143,16 +144,16 @@ export const ProductItem = ({ title, description, href, src }: { title: string; 
         <Image src={src} fill sizes="140px" alt={title} className="object-cover group-hover:scale-105 transition-transform duration-300" />
       </div>
       <div className="flex-1">
-        <h4 className="text-xl font-bold mb-1 text-white">{title}</h4>
-        <p className="text-gray-300 text-sm">{description}</p>
+        <h4 className="text-xl font-bold mb-1">{title}</h4>
+        <p className="text-sm">{description}</p>
       </div>
     </a>
   );
 };
 
-export const HoveredLink = ({ children, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+export const HoveredLink = ({ children, className, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
-    <a {...rest} className="text-gray-300 hover:text-white transition-colors duration-200 block py-2 px-3 rounded-md hover:bg-white/10">
+    <a {...rest} className={clsx("text-current transition-colors duration-200 block py-2 px-3 rounded-md hover:bg-white/10", className)}>
       {children}
     </a>
   );

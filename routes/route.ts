@@ -94,26 +94,7 @@ export const routes: RouteItem[] = [
     ],
   },
   {
-    name: "Categories",
-    to: "/categories",
-    subRoutes: [
-      {
-        name: "Categories",
-        items: [
-          {
-            name: "Fashion",
-            to: "/categories/fashion",
-          },
-          {
-            name: "Home",
-            to: "/categories/home",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "About",
+    name: "About Us",
     to: "/about",
   },
   {

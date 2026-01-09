@@ -8,7 +8,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <main className="bg-background overflow-hidden">
-      <Navbar colorIcon="white" />
+      <Navbar colorIcon="black" />
       {children}
       <Footer />
     </main>

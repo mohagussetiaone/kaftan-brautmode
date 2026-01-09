@@ -1,7 +1,7 @@
 "use client";
 
+import { galleryTwoDummy } from "@/app/constants/product/product";
 import { motion } from "framer-motion";
-import { galleryTwoDummy } from "@/app/constants/gallery/gallery-dummy";
 import Image, { StaticImageData } from "next/image";
 
 export interface Image {

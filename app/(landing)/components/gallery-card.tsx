@@ -1,7 +1,9 @@
-import { GalleryDummy } from "@/app/constants/gallery/gallery-dummy";
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Gallery from "./gallery";
 import { Button } from "@/components/ui/button";
+import { GALLERY_CART_PRODUCTS } from "@/app/constants/product/product";
 
 const GalleryCard = () => {
   return (
@@ -16,7 +18,7 @@ const GalleryCard = () => {
           </TabsList>
           <TabsContent value="wedding-dress">
             <div className="grid grid-cols-3 gap-4">
-              {GalleryDummy.map((item) => (
+              {GALLERY_CART_PRODUCTS.map((item) => (
                 <Gallery {...item} key={item.id} />
               ))}
             </div>
@@ -24,7 +26,7 @@ const GalleryCard = () => {
           </TabsContent>
           <TabsContent value="uncovered">
             <div className="grid grid-cols-3 gap-4">
-              {GalleryDummy.map((item) => (
+              {GALLERY_CART_PRODUCTS.map((item) => (
                 <Gallery {...item} key={item.id} />
               ))}
             </div>
@@ -32,7 +34,7 @@ const GalleryCard = () => {
           </TabsContent>
           <TabsContent value="accessories">
             <div className="grid grid-cols-3 gap-4">
-              {GalleryDummy.map((item) => (
+              {GALLERY_CART_PRODUCTS.map((item) => (
                 <Gallery {...item} key={item.id} />
               ))}
             </div>

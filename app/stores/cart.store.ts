@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { SampleCartProductsType, Products, ColorOption, SizeOption, CartItemForBroadcast } from "@/app/types/product.type";
-import { SAMPLE_CART_PRODUCTS } from "@/app/constants/product/product";
+import { GALLERY_CART_PRODUCTS } from "@/app/constants/product/product";
 import { eventBroadcaster } from "@/app/utils/event-broadcast";
 
 // Type untuk cart options
@@ -64,7 +64,7 @@ const calculateFinalPrice = (basePrice: number, options?: CartOptions): number =
 export const useCart = create<CartState>()(
   persist(
     (set, get) => ({
-      cartItems: SAMPLE_CART_PRODUCTS,
+      cartItems: GALLERY_CART_PRODUCTS,
       selectedItems: [],
 
       syncCart: (cartItems, selectedItems) => {

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu as MenuIcon, SearchIcon, ShoppingCartIcon, User2Icon } from "lucide-react";
+import { Menu as MenuIcon, SearchIcon, User2Icon } from "lucide-react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Menu, MenuItem, HoveredLink } from "@/components/ui/navbar-menu";
@@ -13,17 +13,27 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger, SheetFooter, SheetTitle
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 import Logo from "@/app/assets/images/logo/main-logo.png";
+import LogoSecondary from "@/app/assets/images/logo/main-secondary.png";
 import { routes } from "@/routes/route";
 import Carts from "@/app/(landing)/components/cart/cart-main";
 
-const Navbar = () => {
+/* =======================
+   COLOR ICON MAPPING
+======================= */
+const textColorMap = {
+  black: "text-black",
+  white: "text-white",
+} as const;
+
+type ColorIcon = keyof typeof textColorMap;
+
+const Navbar = ({ colorIcon }: { colorIcon?: ColorIcon }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [active, setActive] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [accordionValue, setAccordionValue] = useState<string>("");
 
-  // Handle scroll for navbar background
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 20;
@@ -31,7 +41,6 @@ const Navbar = () => {
         setScrolled(isScrolled);
       }
 
-      // Close dropdown on scroll
       if (active) {
         setActive(null);
       }
@@ -41,7 +50,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled, active]);
 
-  // Responsive handling
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     const handleViewportChange = (event: MediaQueryListEvent | MediaQueryList) => {
@@ -60,7 +68,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Reset accordion ketika sheet ditutup
   const handleSheetOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
@@ -68,31 +75,35 @@ const Navbar = () => {
     }
   };
 
+  const currentTextColor = textColorMap[colorIcon ?? "white"];
+
   return (
     <>
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-black/30 backdrop-blur-2xl py-2 shadow-lg" : "bg-transparent backdrop-blur-2xl py-2"}`}>
         <div className="grid grid-cols-1 md:grid-cols-3 items-center px-4">
           <div />
 
-          {/* Desktop Navigation dengan Hover Menu */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center justify-center">
             <div className="hidden md:flex items-center justify-start">
               <Link href="/" className="flex items-center">
-                <Image width={60} height={60} src={Logo} alt="logo" className="transition-transform duration-300 hover:scale-105" />
+                <Image width={60} height={60} src={colorIcon === "white" ? Logo : LogoSecondary} alt="logo" className="transition-transform duration-300 hover:scale-105" />
               </Link>
             </div>
+
             <Menu setActive={setActive}>
               {routes.map((route) => {
                 if (route.subRoutes && route.subRoutes.length > 0) {
                   return (
-                    <MenuItem key={route.name} setActive={setActive} active={active} item={route.name} scrolled={scrolled}>
+                    <MenuItem key={route.name} setActive={setActive} active={active} item={route.name} scrolled={scrolled} textColor={currentTextColor}>
                       <div className="grid grid-cols-3 gap-8 text-sm p-6 ml-64">
                         {route.subRoutes.map((group) => (
                           <div key={group.name} className="space-y-4">
-                            <h4 className="font-medium font-playfair text-2xl text-white">{group.name}</h4>
+                            <h4 className={clsx("font-medium font-playfair text-2xl", currentTextColor)}>{group.name}</h4>
+
                             <div className="space-y-1">
                               {group?.items?.map((item, index) => (
-                                <HoveredLink key={index} href={item.to} onClick={() => setActive(null)}>
+                                <HoveredLink key={index} href={item.to} onClick={() => setActive(null)} className={currentTextColor}>
                                   <div className="flex items-center">
                                     <span className="font-medium text-lg">{item.name}</span>
                                   </div>
@@ -104,29 +115,21 @@ const Navbar = () => {
                       </div>
                     </MenuItem>
                   );
-                } else {
-                  return (
-                    <div key={route.name} className="relative mx-4" onMouseEnter={() => setActive(null)}>
-                      <Link href={route.to} className="block">
-                        <span
-                          className={clsx("font-medium transition-colors duration-200 cursor-pointer", {
-                            "text-white": pathname === route.to,
-                            "text-gray-300 hover:text-white": pathname !== route.to,
-                          })}
-                        >
-                          {route.name}
-                        </span>
-                      </Link>
-                    </div>
-                  );
                 }
+
+                return (
+                  <div key={route.name} className="relative mx-4" onMouseEnter={() => setActive(null)}>
+                    <Link href={route.to} className="block">
+                      <span className={clsx("font-medium transition-colors duration-200 cursor-pointer", pathname.startsWith(route.to) ? currentTextColor : `${currentTextColor}`)}>{route.name}</span>
+                    </Link>
+                  </div>
+                );
               })}
             </Menu>
           </div>
 
           {/* Icons Section */}
           <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6">
-            {/* Logo di tengah (mobile) */}
             <div className="flex md:hidden items-center justify-center">
               <Link href="/" className="flex">
                 <Image width={50} height={50} src={Logo} alt="logo" />
@@ -135,25 +138,24 @@ const Navbar = () => {
 
             <div className="hidden md:flex gap-4 items-center">
               <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <User2Icon color="white" size={20} />
+                <User2Icon color={colorIcon} size={20} />
               </button>
               <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <SearchIcon color="white" size={20} />
+                <SearchIcon color={colorIcon} size={20} />
               </button>
-              <Carts />
-              {/* <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <ShoppingCartIcon color="white" size={20} />
-              </button> */}
+              <Carts colorIcon={colorIcon} />
             </div>
 
-            {/* Mobile Menu Trigger dengan Accordion */}
+            {/* Mobile */}
             <div className="flex items-center md:hidden">
+              <Carts colorIcon={colorIcon} />
               <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
                 <SheetTrigger asChild>
                   <button className="p-2">
-                    <MenuIcon className="w-8 h-8 text-white" suppressHydrationWarning />
+                    <MenuIcon className={currentTextColor} suppressHydrationWarning />
                   </button>
                 </SheetTrigger>
+
                 <SheetContent className="p-0 z-100 md:hidden w-full max-w-xs sm:max-w-sm bg-transparent backdrop-blur-2xl">
                   <SheetHeader className="px-4 pt-6">
                     <SheetTitle className="sr-only">menu</SheetTitle>
@@ -163,7 +165,6 @@ const Navbar = () => {
                   </SheetHeader>
 
                   <div className="px-4 min-h-screen overflow-y-auto pb-16">
-                    {/* Menu items */}
                     <Accordion type="single" collapsible className="w-full" value={accordionValue} onValueChange={setAccordionValue}>
                       {routes.map((route) => {
                         const isActive = pathname === route.to;
@@ -176,10 +177,7 @@ const Navbar = () => {
                               <Link
                                 href={route.to}
                                 onClick={() => setIsOpen(false)}
-                                className={clsx("flex items-center justify-between p-3 text-lg font-medium rounded-lg transition-colors", {
-                                  "text-white bg-white/10": isActive,
-                                  "text-gray-300 hover:bg-white/5 hover:text-white": !isActive,
-                                })}
+                                className={clsx("flex items-center justify-between p-3 text-lg font-medium rounded-lg transition-colors", isActive ? `${currentTextColor} bg-white/10` : "text-gray-300 hover:bg-white/5")}
                               >
                                 {route.name}
                               </Link>
@@ -189,12 +187,7 @@ const Navbar = () => {
 
                         return (
                           <AccordionItem key={route.name} value={itemKey} className="border-b-0 mb-1">
-                            <AccordionTrigger
-                              className={clsx("p-3 text-lg font-medium rounded-lg hover:no-underline hover:bg-white/5 transition-colors", {
-                                "text-white bg-white/10": isActive,
-                                "text-gray-300 hover:text-white": !isActive,
-                              })}
-                            >
+                            <AccordionTrigger className={clsx("p-3 text-lg font-medium rounded-lg hover:no-underline hover:bg-white/5 transition-colors", isActive ? `${currentTextColor} bg-white/10` : currentTextColor)}>
                               <div className="flex items-center justify-between w-full">
                                 <span>{route.name}</span>
                               </div>
@@ -213,15 +206,13 @@ const Navbar = () => {
                                     <div className="space-y-0.5">
                                       {group?.items?.map((item) => {
                                         const isItemActive = pathname === item.to;
+
                                         return (
                                           <Link
                                             key={item.to}
                                             href={item.to}
                                             onClick={() => setIsOpen(false)}
-                                            className={clsx("block py-2 px-3 text-sm rounded-md transition-colors", {
-                                              "text-white bg-white/10": isItemActive,
-                                              "text-gray-300 hover:text-white hover:bg-white/5": !isItemActive,
-                                            })}
+                                            className={clsx("block py-2 px-3 text-sm rounded-md transition-colors", isItemActive ? `${currentTextColor} bg-white/10` : "text-gray-300 hover:bg-white/5")}
                                           >
                                             {item.name}
                                           </Link>
@@ -240,19 +231,17 @@ const Navbar = () => {
 
                   <SheetFooter className="mt-4 px-4 pb-6">
                     <div className="flex flex-col gap-2 w-full">
-                      <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors text-white" onClick={() => setIsOpen(false)}>
+                      <button className={clsx("flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors", currentTextColor)} onClick={() => setIsOpen(false)}>
                         <User2Icon size={20} />
                         <span>Account</span>
                       </button>
-                      <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors text-white" onClick={() => setIsOpen(false)}>
+
+                      <button className={clsx("flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors", currentTextColor)} onClick={() => setIsOpen(false)}>
                         <SearchIcon size={20} />
                         <span>Search</span>
                       </button>
+
                       <Carts />
-                      {/* <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors text-white" onClick={() => setIsOpen(false)}>
-                        <ShoppingCartIcon size={20} />
-                        <span>Cart</span>
-                      </button> */}
                     </div>
                   </SheetFooter>
                 </SheetContent>

@@ -1,31 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import Image from "next/image";
-import { Star, Heart, Minus, Plus, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { Card } from "@/components/ui/card";
-import Banner from "../../components/banner";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { Star, Minus, Plus, ShoppingCart } from "lucide-react";
+
 import ModelImg1 from "@/app/assets/images/gallery/model1.png";
 import ModelImg2 from "@/app/assets/images/gallery/model2.png";
 import ModelImg3 from "@/app/assets/images/gallery/model3.png";
 import ModelImg4 from "@/app/assets/images/gallery/model4.png";
 import bgImage from "@/app/assets/images/banner/main-banner.jpg";
-import { useCart } from "@/app/stores/cart.store";
-import type { ProductPageProduct, RelatedProduct, ColorOption, SizeOption } from "@/app/types/product.type";
-import { toast } from "sonner";
 
-// Mock data for the product
-const productData: ProductPageProduct = {
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+
+import Banner from "../../components/banner";
+
+import { useCart } from "@/app/stores/cart.store";
+import { GALLERY_CART_PRODUCTS } from "@/app/constants/product/product";
+import type { ProductPageProduct, RelatedProduct, ColorOption, SizeOption } from "@/app/types/product.type";
+import CartOver from "../../components/cart/cart-over";
+
+// Data fallback untuk produk wedding dress
+const WEDDING_DRESS_PRODUCT: ProductPageProduct = {
   id: "brigid-001",
   name: "Brigid Wedding Dress",
   description:
     "Brigid is a soft, romantic gown with delicate floral lace and slim straps that highlight natural elegance. Its airy tulle skirt flows effortlessly, creating a light, timeless look—perfect for modern brides who want simple beauty with graceful charm.",
   basePrice: 249.99,
-  price: 249.99, // final price (sama dengan basePrice untuk product ini)
+  price: 249.99,
   image: ModelImg1,
   minOrder: 1,
   stock: 100,
@@ -97,70 +103,140 @@ const productData: ProductPageProduct = {
   },
 };
 
-// Mock related products
-const relatedProducts: RelatedProduct[] = [
-  {
-    id: "sienna-001",
-    name: "Sienna",
-    price: 249.99,
-    image: ModelImg2,
-  },
-  {
-    id: "clowly-001",
-    name: "Clowly",
-    price: 299.99,
-    image: ModelImg3,
-  },
-  {
-    id: "aurora-001",
-    name: "Aurora",
-    price: 349.99,
-    image: ModelImg4,
-  },
-];
+// Fungsi untuk mengkonversi dari SampleCartProductsType ke ProductPageProduct
+//eslint-disable-next-line
+const convertToProductPageProduct = (cartProduct: any): ProductPageProduct => {
+  return {
+    id: cartProduct.id,
+    name: cartProduct.name,
+    description: cartProduct.description,
+    basePrice: cartProduct.price - (cartProduct.selectedOptions?.color?.priceAdjustment || 0) - (cartProduct.selectedOptions?.size?.priceAdjustment || 0),
+    price: cartProduct.price,
+    image: cartProduct.image,
+    minOrder: cartProduct.minOrder,
+    stock: 100,
+    categories: cartProduct.categories || [],
+    images: [cartProduct.image, ModelImg2, ModelImg3, ModelImg4],
+    rating: 4.5,
+    reviewCount: 100,
+    badges: ["Bestseller"],
+    variants: {
+      variant: cartProduct.variant || "",
+      type: cartProduct.type || "",
+    },
+    customOptions: {
+      colors: cartProduct.selectedOptions?.color
+        ? [
+            {
+              id: cartProduct.selectedOptions.color.id,
+              name: cartProduct.selectedOptions.color.name,
+              hexCode: cartProduct.selectedOptions.color.hexCode,
+              priceAdjustment: cartProduct.selectedOptions.color.priceAdjustment,
+              image: cartProduct.selectedOptions.color.image || cartProduct.image,
+            },
+          ]
+        : [
+            {
+              id: "default",
+              name: "Default",
+              hexCode: "#666666",
+              priceAdjustment: 0,
+              image: cartProduct.image,
+            },
+          ],
+      sizes: cartProduct.selectedOptions?.size
+        ? [
+            {
+              id: cartProduct.selectedOptions.size.id,
+              name: cartProduct.selectedOptions.size.name,
+              priceAdjustment: cartProduct.selectedOptions.size.priceAdjustment,
+            },
+          ]
+        : [
+            {
+              id: "standard",
+              name: "Standard",
+              priceAdjustment: 0,
+            },
+          ],
+    },
+  };
+};
 
 export default function ProductPage() {
+  const params = useParams();
+  const catalogId = params.catalogId as string;
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState<ColorOption | null>(null);
   const [selectedSize, setSelectedSize] = useState<SizeOption | null>(null);
-  const [quantity, setQuantity] = useState(productData.minOrder || 1);
+  const [quantity, setQuantity] = useState(1);
   const [isInCart, setIsInCart] = useState(false);
   const [cartItemId, setCartItemId] = useState<string | null>(null);
+  const [productData, setProductData] = useState<ProductPageProduct | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
 
   const { addToCart, updateQuantity, findCartItem } = useCart();
 
-  // Initialize selections
+  // Cari produk berdasarkan catalogId
   useEffect(() => {
-    // Set default selections
-    if (productData.customOptions?.colors?.[0] && !selectedColor) {
-      setSelectedColor(productData.customOptions.colors[0]);
+    if (!catalogId) return;
+
+    // Cari produk di GALLERY_CART_PRODUCTS
+    const foundProduct = GALLERY_CART_PRODUCTS.find((product) => product.id === catalogId);
+
+    if (foundProduct) {
+      // Konversi ke ProductPageProduct
+      const productPageData = convertToProductPageProduct(foundProduct);
+      //eslint-disable-next-line
+      setProductData(productPageData);
+      setQuantity(productPageData.minOrder || 1);
+
+      // Set default selections
+      if (productPageData.customOptions?.colors?.[0]) {
+        setSelectedColor(productPageData.customOptions.colors[0]);
+      }
+      if (productPageData.customOptions?.sizes?.[0]) {
+        setSelectedSize(productPageData.customOptions.sizes[0]);
+      }
+
+      // Set related products (produk lain dari GALLERY_CART_PRODUCTS)
+      const related = GALLERY_CART_PRODUCTS.filter((p) => p.id !== catalogId).map((p) => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        image: p.image,
+      }));
+      setRelatedProducts(related);
+    } else {
+      // Jika tidak ditemukan, gunakan wedding dress sebagai fallback
+      setProductData(WEDDING_DRESS_PRODUCT);
+      setQuantity(WEDDING_DRESS_PRODUCT.minOrder || 1);
+
+      // Set default selections
+      if (WEDDING_DRESS_PRODUCT.customOptions?.colors?.[0]) {
+        setSelectedColor(WEDDING_DRESS_PRODUCT.customOptions.colors[0]);
+      }
+      if (WEDDING_DRESS_PRODUCT.customOptions?.sizes?.[0]) {
+        setSelectedSize(WEDDING_DRESS_PRODUCT.customOptions.sizes[0]);
+      }
+
+      // Set related products dari GALLERY_CART_PRODUCTS
+      const related = GALLERY_CART_PRODUCTS.map((p) => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        image: p.image,
+      }));
+      setRelatedProducts(related);
     }
-    if (productData.customOptions?.sizes?.[0] && !selectedSize) {
-      setSelectedSize(productData.customOptions.sizes[0]);
-    }
+  }, [catalogId]);
 
-    //eslint-disable-next-line
-    checkIfInCart();
-    //eslint-disable-next-line
-  }, [selectedColor, selectedSize]);
+  // Check if product is in cart
+  useEffect(() => {
+    if (!productData || !selectedColor || !selectedSize) return;
 
-  // Calculate final price based on selected options
-  const calculateFinalPrice = () => {
-    let finalPrice = productData.basePrice;
-
-    if (selectedColor?.priceAdjustment) {
-      finalPrice += selectedColor.priceAdjustment;
-    }
-
-    if (selectedSize?.priceAdjustment) {
-      finalPrice += selectedSize.priceAdjustment;
-    }
-
-    return finalPrice;
-  };
-
-  const checkIfInCart = () => {
-    if (selectedColor && selectedSize) {
+    const checkIfInCart = () => {
       const item = findCartItem(productData.id, {
         color: selectedColor,
         size: selectedSize,
@@ -175,11 +251,30 @@ export default function ProductPage() {
         setCartItemId(null);
         setQuantity(productData.minOrder || 1);
       }
+    };
+
+    checkIfInCart();
+  }, [productData, selectedColor, selectedSize, findCartItem]);
+
+  // Calculate final price based on selected options
+  const calculateFinalPrice = () => {
+    if (!productData) return 0;
+
+    let finalPrice = productData.basePrice;
+
+    if (selectedColor?.priceAdjustment) {
+      finalPrice += selectedColor.priceAdjustment;
     }
+
+    if (selectedSize?.priceAdjustment) {
+      finalPrice += selectedSize.priceAdjustment;
+    }
+
+    return finalPrice;
   };
 
   const handleAddToCart = () => {
-    if (!selectedColor || !selectedSize) {
+    if (!productData || !selectedColor || !selectedSize) {
       toast.error("Please select color and size before adding to cart");
       return;
     }
@@ -199,11 +294,16 @@ export default function ProductPage() {
       options
     );
 
-    checkIfInCart();
+    // Update cart status
+    const item = findCartItem(productData.id, options);
+    if (item) {
+      setIsInCart(true);
+      setCartItemId(item.cartItemId);
+    }
   };
 
   const handleUpdateQuantity = (newQuantity: number) => {
-    if (!cartItemId) return;
+    if (!cartItemId || !productData) return;
 
     const validatedQuantity = Math.max(productData.minOrder, newQuantity);
     updateQuantity(cartItemId, validatedQuantity);
@@ -211,7 +311,7 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = () => {
-    if (!selectedColor || !selectedSize) {
+    if (!productData || !selectedColor || !selectedSize) {
       toast.error("Please select color and size before buying now");
       return;
     }
@@ -240,11 +340,23 @@ export default function ProductPage() {
   const handleColorSelect = (color: ColorOption) => {
     setSelectedColor(color);
     // Update image if color has specific image
-    const colorIndex = productData.customOptions?.colors?.findIndex((c) => c.id === color.id);
-    if (colorIndex !== undefined && colorIndex !== -1) {
-      setSelectedImage(colorIndex);
+    if (productData?.customOptions?.colors) {
+      const colorIndex = productData.customOptions.colors.findIndex((c) => c.id === color.id);
+      if (colorIndex !== -1) {
+        setSelectedImage(colorIndex);
+      }
     }
   };
+
+  if (!productData) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold">Loading product...</h1>
+        </div>
+      </div>
+    );
+  }
 
   const finalPrice = calculateFinalPrice();
 
@@ -317,7 +429,6 @@ export default function ProductPage() {
                     onClick={() => handleColorSelect(color)}
                     className={`flex items-center gap-2 border px-4 py-2 text-sm transition-all ${selectedColor?.id === color.id ? "border-primary bg-primary/10 font-medium" : "border-input hover:border-primary/50"}`}
                   >
-                    <div className="size-4 rounded-full border" style={{ backgroundColor: color.hexCode }} />
                     {color.name}
                   </button>
                 ))}
@@ -438,21 +549,7 @@ export default function ProductPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedProducts.map((product) => (
-              <Card key={product.id} className="group overflow-hidden border-0 shadow-none hover:shadow-lg transition-shadow">
-                <div className="relative aspect-3/4 overflow-hidden rounded-lg bg-muted">
-                  <Image src={product.image} alt={product.name} fill className="object-cover transition-transform duration-300 group-hover:scale-105" />
-                  <button className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm transition-colors hover:bg-background" aria-label="Add to favorites">
-                    <Heart className="size-5" />
-                  </button>
-                </div>
-                <div className="mt-4 text-center">
-                  <h3 className="font-serif text-lg font-medium">{product.name}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">€{product.price.toFixed(2)}</p>
-                  <Button variant="outline" className="mt-4 w-full" onClick={() => {}}>
-                    View Details
-                  </Button>
-                </div>
-              </Card>
+              <CartOver key={product.id} product={product} />
             ))}
           </div>
         </div>
