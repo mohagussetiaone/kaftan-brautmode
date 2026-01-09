@@ -1,9 +1,19 @@
 export function formatCurrency(value: number): string {
-  if (isNaN(value)) return "0 €";
+  if (Number.isNaN(value)) return "€0";
 
-  return new Intl.NumberFormat("de-DE", {
+  const formatter = new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: 0,
-  }).format(value);
+  });
+
+  const parts = formatter.formatToParts(value);
+
+  const currency = parts.find((p) => p.type === "currency")?.value ?? "€";
+  const number = parts
+    .filter((p) => p.type !== "currency")
+    .map((p) => p.value)
+    .join("");
+
+  return `${currency}${number}`;
 }

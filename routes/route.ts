@@ -33,27 +33,27 @@ export const routes: RouteItem[] = [
         items: [
           {
             name: "Modest",
-            to: "/shop?category=modest",
+            to: "/shop?category=modest#gallery",
             description: "Browse our complete collection",
           },
           {
             name: "A Line",
-            to: "/shop?category=a-line",
+            to: "/shop?category=a-line#gallery",
             description: "Latest products just arrived",
           },
           {
             name: "Open ecked",
-            to: "/shop?category=open-ecked",
+            to: "/shop?category=open-ecked#gallery",
             description: "Our most popular items",
           },
           {
             name: "Luxury",
-            to: "/shop?category=luxury",
+            to: "/shop?category=luxury#gallery",
             description: "Curated selections",
           },
           {
             name: "Plus size",
-            to: "/shop?category=plus-size",
+            to: "/shop?category=plus-size#gallery",
             description: "Clothing & accessories for men",
           },
         ],
@@ -63,27 +63,27 @@ export const routes: RouteItem[] = [
         items: [
           {
             name: "Veils",
-            to: "/shop?category=veils",
+            to: "/shop?category=veils#gallery",
             description: "Browse our complete collection",
           },
           {
             name: "Gloves",
-            to: "/shop?category=gloves",
+            to: "/shop?category=gloves#gallery",
             description: "Browse our complete collection",
           },
           {
             name: "Baleros",
-            to: "/shop?category=baleros",
+            to: "/shop?category=baleros#gallery",
             description: "Browse our complete collection",
           },
           {
             name: "Jewelry",
-            to: "/shop?category=jewelry",
+            to: "/shop?category=jewelry#gallery",
             description: "Browse our complete collection",
           },
           {
             name: "Beits",
-            to: "/shop?category=beits",
+            to: "/shop?category=beits#gallery",
             description: "Browse our complete collection",
           },
         ],

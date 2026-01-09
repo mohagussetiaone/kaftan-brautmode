@@ -147,4 +147,8 @@
     @apply bg-background text-foreground;
     font-family: var(--font-roboto);
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }

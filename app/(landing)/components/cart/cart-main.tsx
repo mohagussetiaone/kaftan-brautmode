@@ -20,6 +20,7 @@ dayjs.tz.setDefault("Asia/Jakarta");
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 import CartEmpty from "./cart-empty";
 import CartItem from "./cart-item";
 import CartSummary from "./cart-summary";
@@ -28,11 +29,10 @@ import CartSelectAll from "./cart-select-all";
 
 export default function Carts({ colorIcon = "white" }: { colorIcon?: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useCart();
 
   const cartIconRef = useRef<HTMLDivElement>(null);
   const waveAnimationRef = useRef<HTMLDivElement>(null);
-
-  const { cartItems } = useCart();
 
   const sendCartPosition = (requestId: string) => {
     if (!cartIconRef.current) return;

@@ -75,7 +75,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex gap-4">
-              <div className="min-w-90">
+              <div className="md:min-w-90 w-full">
                 <Input className="rounded-none" placeholder="Enter your email here" />
               </div>
               <div>
