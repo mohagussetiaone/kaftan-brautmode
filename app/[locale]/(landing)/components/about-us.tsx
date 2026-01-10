@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import AboutImg1 from "@/app/assets/images/about/about1.jpg";
 import AboutImg2 from "@/app/assets/images/about/about2.jpg";
 import AboutImg3 from "@/app/assets/images/about/about3.jpg";
@@ -6,16 +7,16 @@ import AboutImg4 from "@/app/assets/images/about/about4.jpg";
 import { Button } from "@/components/ui/button";
 
 const AboutUs = () => {
+  const t = useTranslations("AboutUs");
+
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         <div className="px-8 md:px-20">
-          <p className="text-3xl md:text-5xl font-medium mb-4 font-playfair">About Us</p>
-          <p className="text-base md:text-lg mb-8">Crafted with Purpose. Defined by Elegance.</p>
-          <p className="text-base md:text-lg">
-            At Kaftan Bridal Fashion, we believe every bride deserves to feel exceptional. Our collection blends timeless elegance with modern silhouettes, curated to celebrate individuality, craftsmanship, and the beauty of your moment
-          </p>
-          <Button className="mt-4">Learn more</Button>
+          <p className="text-3xl md:text-5xl font-medium mb-4 font-playfair">{t("title")}</p>
+          <p className="text-base md:text-lg mb-8">{t("subtitle")}</p>
+          <p className="text-base md:text-lg">{t("description")}</p>
+          <Button className="mt-4">{t("button")}</Button>
         </div>
         <div className="flex flex-col gap-2">
           <div className="grid grid-cols-5 gap-2">

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Toaster } from "sonner";
 import TanstackProvider from "@/app/providers/tanstack-providers";
 import { merriweather, playfairDisplay, roboto } from "@/app/styles/font";
 // import { ThemeProvider } from "@/components/ui/theme-provider";
-
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
@@ -38,8 +39,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const message = await getMessages();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="de" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://accounts.google.com" />
         <link rel="dns-prefetch" href="https://accounts.google.com" />
@@ -51,7 +53,9 @@ export default async function RootLayout({
         <TanstackProvider>
           {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
           <main>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <NextIntlClientProvider messages={message}>{children}</NextIntlClientProvider>
+            </TooltipProvider>
           </main>
           {/* </ThemeProvider> */}
         </TanstackProvider>

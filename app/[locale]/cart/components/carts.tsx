@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import CartQuantity from "@/app/(landing)/components/cart/cart-quantity";
+import CartQuantity from "@/app/[locale]/(landing)/components/cart/cart-quantity";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/app/stores/cart.store";
 import { formatCurrency } from "@/app/utils/format-currency";
 import { useRouter } from "next/navigation";
-import CartOver from "@/app/(landing)/components/cart/cart-over";
+import CartOver from "@/app/[locale]/(landing)/components/cart/cart-over";
 import { GALLERY_CART_PRODUCTS } from "@/app/constants/product/product";
-import BookAppointment from "@/app/(landing)/components/book-appointment";
+import BookAppointment from "@/app/[locale]/(landing)/components/book-appointment";
 
 const Carts = () => {
   const router = useRouter();

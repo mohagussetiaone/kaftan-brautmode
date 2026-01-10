@@ -1,8 +1,6 @@
-// app/stores/cart.store.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import type { SampleCartProductsType, Products, ColorOption, SizeOption, CartItemForBroadcast } from "@/app/types/product.type";
-import { GALLERY_CART_PRODUCTS } from "@/app/constants/product/product";
 import { eventBroadcaster } from "@/app/utils/event-broadcast";
 
 // Type untuk cart options
@@ -64,7 +62,7 @@ const calculateFinalPrice = (basePrice: number, options?: CartOptions): number =
 export const useCart = create<CartState>()(
   persist(
     (set, get) => ({
-      cartItems: GALLERY_CART_PRODUCTS,
+      cartItems: [],
       selectedItems: [],
 
       syncCart: (cartItems, selectedItems) => {
@@ -366,6 +364,7 @@ export const useCart = create<CartState>()(
     }),
     {
       name: "cart-storage",
+      storage: typeof window !== "undefined" ? createJSONStorage(() => localStorage) : undefined,
       onRehydrateStorage: () => {
         return (state, error) => {
           if (error) {

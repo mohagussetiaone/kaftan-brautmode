@@ -1,0 +1,30 @@
+{
+  "LandingBanner": {
+    "title": "Zeitlose Kleider",
+    "title_two": "Moderne Bräute",
+    "description": "Modernes Design, klassische Eleganz und perfekt Sie."
+  },
+  "BestSeller": {
+    "title": "Bestseller",
+    "view_all": "Alle Produkte anzeigen"
+  },
+  "Catalog": {
+    "title_left": "Luxus-Designs,",
+    "title_two_left": "ohne Luxuspreis",
+    "description_left": "Erleben Sie erstklassige Handwerkskunst, zeitlose Silhouetten und hochwertige Stoffe, die Ihr Moment unvergesslich machen – zu einem Preis, der Eleganz erschwinglich hält.",
+    "title_right": "Elegante Roben,",
+    "title_two_right": "mühelos gemacht",
+    "description_right": "Wo zeitloses Design auf moderne Schlichtheit trifft. Finden Sie die Robe, die sich genau richtig für Ihren Moment anfühlt."
+  },
+  "LandingBannerTwo": {
+    "title": "Zeitlose Kleider",
+    "title_two": "Moderne Bräute",
+    "description": "Modernes Design, klassische Eleganz und perfekt Sie."
+  },
+  "AboutUs": {
+    "title": "Über uns",
+    "subtitle": "Mit Hingabe gefertigt. Von Eleganz definiert.",
+    "description": "Bei Kaftan Bridal Fashion sind wir überzeugt: Jede Braut verdient es, sich außergewöhnlich zu fühlen. Unsere Kollektion vereint zeitlose Eleganz mit modernen Silhouetten – ausgewählt, um Individualität, erstklassige Handwerkskunst und die Schönheit Ihres besonderen Moments zu zelebrieren.",
+    "button": "Mehr erfahren"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "LandingBanner": {
+    "title": "Timeless Gowns",
+    "title_two": "Modern Brides",
+    "description": "Modern design, Classic elegance, and Perfectly you."
+  },
+  "BestSeller": {
+    "title": "Best Seller",
+    "view_all": "View All Products"
+  },
+  "Catalog": {
+    "title_left": "Luxury designs,",
+    "title_two_left": "without Luxury price",
+    "description_left": "Experience premium craftsmanship, timeless silhouettes, and high quality fabrics crafted to make your moment unforgettable at a price that keeps elegance within reach.",
+    "title_right": "Elegant gowns,",
+    "title_two_right": "made effortless",
+    "description_right": "Where timeless design meets modern simplicity. Find the gown that feels just right for your moment."
+  },
+  "LandingBannerTwo": {
+    "title": "Timeless Gowns",
+    "title_two": "Modern Brides",
+    "description": "Modern design, Classic elegance, and Perfectly you."
+  },
+  "AboutUs": {
+    "title": "About Us",
+    "subtitle": "Crafted with Purpose. Defined by Elegance.",
+    "description": "At Kaftan Bridal Fashion, we believe every bride deserves to feel exceptional. Our collection blends timeless elegance with modern silhouettes, curated to celebrate individuality, craftsmanship, and the beauty of your moment",
+    "button": "Learn more"
+  }
+}

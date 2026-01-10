@@ -15,17 +15,21 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Logo from "@/app/assets/images/logo/main-logo.png";
 import LogoSecondary from "@/app/assets/images/logo/main-secondary.png";
 import { routes } from "@/routes/route";
-import Carts from "@/app/(landing)/components/cart/cart-main";
+import Carts from "@/app/[locale]/(landing)/components/cart/cart-main";
+
+import { LanguageSwitcher } from "./language-switcher";
+import { LanguageSwitcherMobile } from "./language-switcher-mobile";
 
 /* =======================
    COLOR ICON MAPPING
 ======================= */
-const textColorMap = {
+export const textColorMap = {
   black: "text-black",
   white: "text-white",
 } as const;
 
-type ColorIcon = keyof typeof textColorMap;
+export type ColorIcon = keyof typeof textColorMap;
+export type TextColorValue = (typeof textColorMap)[ColorIcon];
 
 const Navbar = ({ colorIcon }: { colorIcon?: ColorIcon }) => {
   const pathname = usePathname();
@@ -136,7 +140,10 @@ const Navbar = ({ colorIcon }: { colorIcon?: ColorIcon }) => {
               </Link>
             </div>
 
-            <div className="hidden md:flex gap-4 items-center">
+            <div className="hidden md:flex gap-2 items-center">
+              {/* Language Switcher - Desktop */}
+              <LanguageSwitcher variant="default" className="hover:bg-white/10 bg-transparent backdrop-blur-2xl" textColor={currentTextColor} />
+
               <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
                 <User2Icon color={colorIcon} size={20} />
               </button>
@@ -148,6 +155,7 @@ const Navbar = ({ colorIcon }: { colorIcon?: ColorIcon }) => {
 
             {/* Mobile */}
             <div className="flex items-center md:hidden">
+              <LanguageSwitcher variant="default" className="hover:bg-white/10 bg-transparent backdrop-blur-2xl" textColor={currentTextColor} />
               <Carts colorIcon={colorIcon} />
               <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
                 <SheetTrigger asChild>
@@ -231,6 +239,9 @@ const Navbar = ({ colorIcon }: { colorIcon?: ColorIcon }) => {
 
                   <SheetFooter className="mt-4 px-4 pb-6">
                     <div className="flex flex-col gap-2 w-full">
+                      {/* Language Switcher - Mobile */}
+                      <LanguageSwitcherMobile onClose={() => setIsOpen(false)} textColor={currentTextColor} />
+
                       <button className={clsx("flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors", currentTextColor)} onClick={() => setIsOpen(false)}>
                         <User2Icon size={20} />
                         <span>Account</span>
